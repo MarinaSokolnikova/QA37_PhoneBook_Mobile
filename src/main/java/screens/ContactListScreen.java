@@ -12,10 +12,10 @@ public class ContactListScreen extends BaseScreen{
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/action_bar']/android.widget.TextView")
     AndroidElement activityTextView;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//*[@content-desc='More options']")
     AndroidElement menuOptions;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/title']")
     AndroidElement logoutButton;
 
     public boolean isActivityTitleDisplayed(String text) {
@@ -27,5 +27,6 @@ public class ContactListScreen extends BaseScreen{
         logoutButton.click();
         return new AuthenticationScreen(driver);
     }
+
 
 }
