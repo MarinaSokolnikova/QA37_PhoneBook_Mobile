@@ -2,6 +2,7 @@ package screens;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
+import models.Auth;
 import org.openqa.selenium.support.FindBy;
 
 public class AuthenticationScreen extends BaseScreen{
@@ -34,5 +35,13 @@ public class AuthenticationScreen extends BaseScreen{
     public ContactListScreen submitLogin(){
         loginButton.click();
         return new ContactListScreen(driver);
+    }
+
+    public AuthenticationScreen fillLoginRegistrationForm(Auth auth) {
+        should(emailEditText, 10);
+        type(emailEditText, auth.getEmail());
+        type(passwordEditText, auth.getPassword());
+        loginButton.click();
+        return this;
     }
 }
