@@ -28,5 +28,8 @@ public class ContactListScreen extends BaseScreen{
         return new AuthenticationScreen(driver);
     }
 
+    public String textActivityTitle(){
+        return activityTextView.getText();
 
+    }
 }
