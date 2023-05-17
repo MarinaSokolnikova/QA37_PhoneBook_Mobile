@@ -78,6 +78,42 @@ public class AddNewContactsTests extends AppiumConfig {
                 .isErrorMessageContainsText("Error");
     }
 
+    @Test
+    public void createContactWithEmptyLastName(){
+        int i = new Random().nextInt(1000);
+
+        Contact contact = Contact.builder()
+                .name("Sara"+i)
+                .lastName("")
+                .email("sara@gmail.com")
+                .phone("1234567888"+i)
+                .address("Tel Aviv")
+                .description("empty last name")
+                .build();
+
+        new ContactListScreen(driver)
+                .openContactForm()
+                .fillContactForm(contact)
+                .submitContactFormNegative()
+                .isErrorMessageContainsText("");
+    }
+
+    @Test
+    public void createContactWithEmptyEmail(){
+
+    }
+
+    @Test
+    public void createContactWithEmptyPhone(){
+
+    }
+
+    @Test
+    public void createContactWithEmptyAddress(){
+
+    }
+
+
     @AfterClass
     public void postCondition(){
         new ContactListScreen(driver).logout();
