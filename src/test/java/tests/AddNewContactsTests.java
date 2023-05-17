@@ -44,7 +44,20 @@ public class AddNewContactsTests extends AppiumConfig {
 
     @Test
     public void createNewContactSuccessReq(){
+        int i = new Random().nextInt(1000);
+        Contact contact = Contact.builder()
+                .name("Lisa")
+                .lastName("Flip"+i)
+                .email("flip"+i+"@gmail.com")
+                .phone("2345678979"+i)
+                .address("LA")
+                .build();
 
+        new ContactListScreen(driver)
+                .openContactForm()
+                .fillContactForm(contact)
+                .submitContactForm()
+                .isContactAddedByName(contact.getName(), contact.getLastName());
     }
 
     @Test
