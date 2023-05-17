@@ -75,7 +75,7 @@ public class AddNewContactsTests extends AppiumConfig {
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContactFormNegative()
-                .isErrorMessageContainsText("Error");
+                .isErrorMessageContainsText("name=must not be blank");
     }
 
     @Test
@@ -95,22 +95,68 @@ public class AddNewContactsTests extends AppiumConfig {
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContactFormNegative()
-                .isErrorMessageContainsText("");
+                .isErrorMessageContainsText("lastName=must not be blank");
     }
 
     @Test
     public void createContactWithEmptyEmail(){
+        int i = new Random().nextInt(1000);
+
+        Contact contact = Contact.builder()
+                .name("Sara"+i)
+                .lastName("Braun")
+                .email("")
+                .phone("1234567888"+i)
+                .address("Tel Aviv")
+                .description("empty email")
+                .build();
+
+        new ContactListScreen(driver)
+                .openContactForm()
+                .fillContactForm(contact)
+                .submitContactFormNegative()
+                .isErrorMessageContainsText("Error");
 
     }
 
     @Test
     public void createContactWithEmptyPhone(){
+        int i = new Random().nextInt(1000);
 
+        Contact contact = Contact.builder()
+                .name("Sara"+i)
+                .lastName("Braun")
+                .email("sara@gmail.com")
+                .phone("")
+                .address("Tel Aviv")
+                .description("empty phone")
+                .build();
+
+        new ContactListScreen(driver)
+                .openContactForm()
+                .fillContactForm(contact)
+                .submitContactFormNegative()
+                .isErrorMessageContainsText("phone=Phone number must contain only digits!");
     }
 
     @Test
     public void createContactWithEmptyAddress(){
+        int i = new Random().nextInt(1000);
 
+        Contact contact = Contact.builder()
+                .name("Sara"+i)
+                .lastName("Braun")
+                .email("sara@gmail.com")
+                .phone("1234567888"+i)
+                .address("")
+                .description("empty address")
+                .build();
+
+        new ContactListScreen(driver)
+                .openContactForm()
+                .fillContactForm(contact)
+                .submitContactFormNegative()
+                .isErrorMessageContainsText("address=must not be blank");
     }
 
 
