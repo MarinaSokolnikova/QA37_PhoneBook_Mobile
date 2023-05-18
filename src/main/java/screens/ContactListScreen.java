@@ -1,7 +1,10 @@
 package screens;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,6 +31,29 @@ public class ContactListScreen extends BaseScreen{
 
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowName']")
     List<AndroidElement> contactNameList;
+
+    @FindBy(id = "com.sheygam.contactapp:id/rowContainer")
+    List<AndroidElement> contactList;
+
+    @FindBy(id = "android:id/button1")
+    AndroidElement yesButton;
+
+    public ContactListScreen deleteFirstContact(){
+        isShouldHave(activityTextView, "Contact list", 10);
+        AndroidElement first = contactList.get(0);
+        Rectangle rectangle = first.getRect();
+        int xFrom = rectangle.getX()+rectangle.getWidth()/8;
+        int yFrom = rectangle.getY()+rectangle.getHeight()/2;
+        int xTo = rectangle.getX()+rectangle.getWidth()/8*7;
+        int yTo = yFrom;
+
+        TouchAction<?> touchAction = new TouchAction<>(driver);
+        touchAction.longPress(PointOption.point(xFrom, yFrom))
+                .moveTo(PointOption.point(xTo, yTo))
+                .release()
+                .perform();
+        return this;
+    }
 
     public void pause(int time){
         try {
@@ -67,6 +93,11 @@ public class ContactListScreen extends BaseScreen{
             }
         }
         Assert.assertTrue(isPresent);
+        return this;
+    }
+
+    public ContactListScreen isListSizeLessTheOne(){
+        Assert.assertEquals(countBefore-countAfter, 1);
         return this;
     }
 

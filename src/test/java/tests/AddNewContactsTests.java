@@ -99,13 +99,13 @@ public class AddNewContactsTests extends AppiumConfig {
     }
 
     @Test
-    public void createContactWithEmptyEmail(){
+    public void createContactWithWrongEmail(){
         int i = new Random().nextInt(1000);
 
         Contact contact = Contact.builder()
                 .name("Sara"+i)
                 .lastName("Braun")
-                .email("")
+                .email("saragmail.com")
                 .phone("1234567888"+i)
                 .address("Tel Aviv")
                 .description("empty email")
