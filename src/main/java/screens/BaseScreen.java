@@ -5,11 +5,14 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class BaseScreen {
 
@@ -37,11 +40,24 @@ public class BaseScreen {
         new WebDriverWait(driver, time).until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void shouldLessThan(List<AndroidElement> list, int less){
+        new WebDriverWait(driver, 5).until(ExpectedConditions.numberOfElementsToBeLessThan(By.id("com.sheygam.contactapp:id/rowContainer"), less));
+    }
+
     public void checkAlertText(String text){
         Alert alert = new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert();
         System.out.println(alert.getText());
         Assert.assertTrue(alert.getText().contains(text));
         alert.accept();
+    }
+
+    public boolean isElementDisplayed(AndroidElement element){
+        try {
+            should(element, 8);
+            return element.isDisplayed();
+        }catch (IllegalAccessError e){
+            return false;
+        }
     }
 }

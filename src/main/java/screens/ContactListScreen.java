@@ -32,14 +32,21 @@ public class ContactListScreen extends BaseScreen{
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowName']")
     List<AndroidElement> contactNameList;
 
-    @FindBy(id = "com.sheygam.contactapp:id/rowContainer")
+    @FindBy(xpath = "//*[@resource-id = 'com.sheygam.contactapp:id/rowContainer']")
     List<AndroidElement> contactList;
 
     @FindBy(id = "android:id/button1")
     AndroidElement yesButton;
 
+    @FindBy(xpath = "//*[@text='No Contacts. Add One more!']")
+    AndroidElement contactListEmpty;
+
+    int countBefore;
+    int countAfter;
+
     public ContactListScreen deleteFirstContact(){
         isShouldHave(activityTextView, "Contact list", 10);
+        countBefore = contactList.size();
         AndroidElement first = contactList.get(0);
         Rectangle rectangle = first.getRect();
         int xFrom = rectangle.getX()+rectangle.getWidth()/8;
@@ -52,6 +59,11 @@ public class ContactListScreen extends BaseScreen{
                 .moveTo(PointOption.point(xTo, yTo))
                 .release()
                 .perform();
+        should(yesButton, 8);
+        yesButton.click();
+
+        shouldLessThan(contactList, countBefore);
+        countAfter = contactList.size();
         return this;
     }
 
@@ -97,8 +109,27 @@ public class ContactListScreen extends BaseScreen{
     }
 
     public ContactListScreen isListSizeLessTheOne(){
+
         Assert.assertEquals(countBefore-countAfter, 1);
         return this;
+    }
+
+
+    public int sizeContactList(){
+        return contactList.size();
+    }
+
+    public ContactListScreen deleteAllContacts(){
+        pause(1000);
+        while(contactList.size()>0){
+            deleteFirstContact();
+        }
+        return this;
+    }
+
+    public boolean isContactListEmpty(){
+        isShouldHave(activityTextView, "Contact list", 8);
+        return isElementDisplayed(contactListEmpty);
     }
 
 

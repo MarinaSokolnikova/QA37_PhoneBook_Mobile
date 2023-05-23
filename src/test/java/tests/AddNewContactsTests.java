@@ -32,13 +32,13 @@ public class AddNewContactsTests extends AppiumConfig {
                 .address("NY")
                 .description("my friend")
                 .build();
+        new ContactListScreen(driver).pause(10);
 
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContactForm()
-                .isContactAddedByName(contact.getName(), contact.getLastName());
-
+            new ContactListScreen(driver)
+                    .openContactForm()
+                    .fillContactForm(contact)
+                    .submitContactForm()
+                    .isContactAddedByName(contact.getName(), contact.getLastName());
 
     }
 
@@ -53,11 +53,11 @@ public class AddNewContactsTests extends AppiumConfig {
                 .address("LA")
                 .build();
 
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContactForm()
-                .isContactAddedByName(contact.getName(), contact.getLastName());
+            new ContactListScreen(driver)
+                    .openContactForm()
+                    .fillContactForm(contact)
+                    .submitContactForm()
+                    .isContactAddedByName(contact.getName(), contact.getLastName());
     }
 
     @Test

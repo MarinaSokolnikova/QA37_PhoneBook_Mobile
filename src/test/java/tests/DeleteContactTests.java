@@ -2,6 +2,7 @@ package tests;
 
 import config.AppiumConfig;
 import models.Auth;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
@@ -19,6 +20,14 @@ public class DeleteContactTests extends AppiumConfig {
     public void deleteFirstContact(){
         new ContactListScreen(driver).deleteFirstContact()
                 .isListSizeLessTheOne();
+    }
+
+    @Test
+    public void deleteAllContacts(){
+        new ContactListScreen(driver)
+                .deleteAllContacts()
+                .isContactListEmpty();
+
     }
 
 }
